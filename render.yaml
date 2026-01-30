@@ -1,0 +1,32 @@
+version: "1"
+projects:
+  - name: Pep's project
+    environments:
+      - name: Production
+        services:
+          - type: web
+            name: serverless
+            runtime: node
+            repo: https://github.com/Pierre63628/serverless
+            plan: free
+            envVars:
+              - key: DATABASE_URL
+                fromDatabase:
+                  name: postgres-serverless
+                  property: connectionString
+              - fromGroup: serverless_variable
+            region: frankfurt
+            buildCommand: npm install
+            startCommand: npm run start
+            autoDeployTrigger: commit
+            rootDir: esgi.4a.render.nodejs-master
+        databases:
+          - name: postgres-serverless
+            databaseName: postgres_serverless
+            user: database_password
+            plan: free
+            region: frankfurt
+            ipAllowList:
+              - source: 0.0.0.0/0
+                description: everywhere
+            postgresMajorVersion: "18"
