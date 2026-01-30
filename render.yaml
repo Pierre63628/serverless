@@ -8,6 +8,7 @@ projects:
             name: serverless
             runtime: node
             repo: https://github.com/Pierre63628/serverless
+            branch: main
             plan: free
             envVars:
               - key: DATABASE_URL
